@@ -52,12 +52,12 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/huddlej/pnwmoths/django/pnwmoths/static/media/'
+MEDIA_ROOT = '/home/huddlej/pnwmoths/django/pnwbutterflies/static/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://dev.pnwmoths.biol.wwu.edu/media/'
+MEDIA_URL = 'http://pnwbutterflies.biol.wwu.edu/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -97,7 +97,7 @@ MIDDLEWARE_CLASSES = (
     'pnwmoths.app.middleware.LoginRequiredMiddleware',
 )
 
-ROOT_URLCONF = 'pnwmoths.app.urls'
+ROOT_URLCONF = 'pnwbutterflies.app.urls'
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
@@ -130,8 +130,8 @@ INSTALLED_APPS = (
     'menus',
     'mptt',
     'publisher',
-    'pnwmoths.app.cms_search',
-    'pnwmoths.app.species',
+    'pnwbutterflies.app.cms_search',
+    'pnwbutterflies.app.species',
     'sorl.thumbnail',
     'easy_thumbnails',
     'south',
@@ -171,19 +171,19 @@ FILE_UPLOAD_HANDLERS = ("django.core.files.uploadhandler.TemporaryFileUploadHand
 # csvimporter
 #
 # Custom setting used to calculate excluded apps with a simpler definition.
-CSVIMPORTER_INCLUDE = ["pnwmoths.app.species"]
+CSVIMPORTER_INCLUDE = ["pnwbutterflies.app.species"]
 
 # Actual csvimporter settings.
 CSVIMPORTER_EXCLUDE = [app.split(".")[-1] for app in INSTALLED_APPS
                        if app not in CSVIMPORTER_INCLUDE]
 
 CSVIMPORTER_DATA_TRANSFORMS = {
-    "species.speciesrecord": "pnwmoths.app.species.views.transform_species_record"
+    "species.speciesrecord": "pnwbutterflies.app.species.views.transform_species_record"
 }
 
 # CSV admin settings
 CSV_ADMIN_CONTENT_FORMS = {
-    ("species", "speciesrecord"): "pnwmoths.app.species.forms.SpeciesRecordForm"
+    ("species", "speciesrecord"): "pnwbutterflies.app.species.forms.SpeciesRecordForm"
 }
 CSV_ADMIN_USE_TRANSACTIONS=False
 CSV_ADMIN_TEMPLATE="admin/csv_admin/validate_form.html"
@@ -193,7 +193,7 @@ CSV_ADMIN_TEMPLATE="admin/csv_admin/validate_form.html"
 # define the lookup channels in use on the site
 AJAX_LOOKUP_CHANNELS = {
     #   pass a dict with the model and the field to search against
-    'SpeciesRecord'  : ('pnwmoths.app.species.ajaxselect_lookups', 'SpeciesRecordLookup')
+    'SpeciesRecord'  : ('pnwbutterflies.app.species.ajaxselect_lookups', 'SpeciesRecordLookup')
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = True
