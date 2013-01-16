@@ -1,0 +1,6 @@
+# pip requirements file for pnwmoths Django application.
+
+Django==1.2.7
+django-cms==2.1.1-final
+django-haystack==1.0.1-final
+South

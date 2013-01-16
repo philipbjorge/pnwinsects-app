@@ -1,0 +1,12 @@
+*.py[cod]
+*.swp
+*.tmpl
+*.swo
+*~
+species/migrations
+species/fixtures
+FusionUpdate.py
+db.py
+fusionKey.p12
+indexden
+settings.py
