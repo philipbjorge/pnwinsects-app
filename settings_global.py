@@ -20,7 +20,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'NAME': 'pnwinsects',
+        'NAME': 'pnwsawflies',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'pnwmoths',
         'PASSWORD': DATABASE_PASSWORDS.get("pnwmoths")
@@ -52,12 +52,12 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/huddlej/pnwmoths/django/pnwinsects/static/media/'
+MEDIA_ROOT = '/home/huddlej/pnwmoths/django/pnwsawflies/static/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://pnwinsects.biol.wwu.edu/media/'
+MEDIA_URL = 'http://pnwsawflies.biol.wwu.edu/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -94,10 +94,10 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'pnwinsects.app.middleware.LoginRequiredMiddleware',
+    'pnwsawflies.app.middleware.LoginRequiredMiddleware',
 )
 
-ROOT_URLCONF = 'pnwinsects.app.urls'
+ROOT_URLCONF = 'pnwsawflies.app.urls'
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
@@ -129,8 +129,8 @@ INSTALLED_APPS = (
     'menus',
     'mptt',
     'publisher',
-    'pnwinsects.app.cms_search',
-    'pnwinsects.app.species',
+    'pnwsawflies.app.cms_search',
+    'pnwsawflies.app.species',
     'sorl.thumbnail',
     'south',
     'reversion',
@@ -160,7 +160,7 @@ LANGUAGES = (
 
 # django-haystack
 HAYSTACK_XAPIAN_PATH = os.path.join(PROJECT_ROOT, "site_index")
-HAYSTACK_SITECONF = "pnwinsects.app.search_sites"
+HAYSTACK_SITECONF = "pnwsawflies.app.search_sites"
 HAYSTACK_SEARCH_ENGINE = "xapian"
 
 FILE_UPLOAD_HANDLERS = ("django.core.files.uploadhandler.TemporaryFileUploadHandler",
@@ -169,19 +169,19 @@ FILE_UPLOAD_HANDLERS = ("django.core.files.uploadhandler.TemporaryFileUploadHand
 # csvimporter
 #
 # Custom setting used to calculate excluded apps with a simpler definition.
-CSVIMPORTER_INCLUDE = ["pnwinsects.app.species"]
+CSVIMPORTER_INCLUDE = ["pnwsawflies.app.species"]
 
 # Actual csvimporter settings.
 CSVIMPORTER_EXCLUDE = [app.split(".")[-1] for app in INSTALLED_APPS
                        if app not in CSVIMPORTER_INCLUDE]
 
 CSVIMPORTER_DATA_TRANSFORMS = {
-    "species.speciesrecord": "pnwinsects.app.species.views.transform_species_record"
+    "species.speciesrecord": "pnwsawflies.app.species.views.transform_species_record"
 }
 
 # CSV admin settings
 CSV_ADMIN_CONTENT_FORMS = {
-    ("species", "speciesrecord"): "pnwinsects.app.species.forms.SpeciesRecordForm"
+    ("species", "speciesrecord"): "pnwsawflies.app.species.forms.SpeciesRecordForm"
 }
 CSV_ADMIN_USE_TRANSACTIONS=False
 CSV_ADMIN_TEMPLATE="admin/csv_admin/validate_form.html"
@@ -191,7 +191,7 @@ CSV_ADMIN_TEMPLATE="admin/csv_admin/validate_form.html"
 # define the lookup channels in use on the site
 AJAX_LOOKUP_CHANNELS = {
     #   pass a dict with the model and the field to search against
-    'SpeciesRecord'  : ('pnwinsects.app.species.ajaxselect_lookups', 'SpeciesRecordLookup')
+    'SpeciesRecord'  : ('pnwsawflies.app.species.ajaxselect_lookups', 'SpeciesRecordLookup')
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = True
