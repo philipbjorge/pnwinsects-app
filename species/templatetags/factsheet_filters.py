@@ -1,6 +1,6 @@
 from django import template
 from django.db.models import Min, Max
-from pnwmoths.species.models import State, SpeciesRecord, GlossaryWord
+from ..models import State, SpeciesRecord, GlossaryWord
 import json, re
 
 register = template.Library()
