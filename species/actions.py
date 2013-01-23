@@ -1,7 +1,7 @@
 import csv
 from django.http import HttpResponse
 from os.path import basename, splitext
-from pnwmoths.species.forms import SpeciesRecordForm
+from forms import SpeciesRecordForm
 
 """
     csv export

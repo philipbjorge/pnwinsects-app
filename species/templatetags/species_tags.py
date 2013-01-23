@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django.db.models import F
 import re
 
-from pnwmoths.species.models import Species, PlateImage, GlossaryWord
+from ..models import Species, PlateImage, GlossaryWord
 from cms.models.pagemodel import Page
 
 import random
