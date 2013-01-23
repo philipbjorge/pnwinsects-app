@@ -20,7 +20,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'NAME': 'pnwmoths',
+        'NAME': 'pnwbutterflies',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'pnwmoths',
         'PASSWORD': DATABASE_PASSWORDS.get("pnwmoths")
@@ -94,7 +94,7 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'pnwmoths.app.middleware.LoginRequiredMiddleware',
+    'pnwbutterflies.app.middleware.LoginRequiredMiddleware',
 )
 
 ROOT_URLCONF = 'pnwbutterflies.app.urls'
@@ -162,7 +162,7 @@ LANGUAGES = (
 
 # django-haystack
 HAYSTACK_XAPIAN_PATH = os.path.join(PROJECT_ROOT, "site_index")
-HAYSTACK_SITECONF = "pnwmoths.app.search_sites"
+HAYSTACK_SITECONF = "pnwbutterflies.app.search_sites"
 HAYSTACK_SEARCH_ENGINE = "xapian"
 
 FILE_UPLOAD_HANDLERS = ("django.core.files.uploadhandler.TemporaryFileUploadHandler",
