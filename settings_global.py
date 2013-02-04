@@ -97,13 +97,7 @@ MIDDLEWARE_CLASSES = (
     'pnwsawflies.app.middleware.LoginRequiredMiddleware',
 )
 
-ROOT_URLCONF = 'pnwmoths.app.urls'
-=======
-    'pnwsawflies.app.middleware.LoginRequiredMiddleware',
-)
-
 ROOT_URLCONF = 'pnwsawflies.app.urls'
->>>>>>> Custom settings.
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
