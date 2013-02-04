@@ -1,7 +1,7 @@
 import datetime
 import os
 from Levenshtein import distance
-from sorl.thumbnail import ImageField
+from easy_thumbnails.fields import ThumbnailerImageField as ImageField
 import re
 
 from django.conf import settings
@@ -30,19 +30,14 @@ class GlossaryImage(models.Model):
     """
     IMAGE_PATH = "glossary-images/"
 
-    # TODO: REPLACE SORL WITH SOMETHING THAT DOESN"T PERMANENT CACHE!
-    # Changing these dimensions will force sorl to recache thumbs
-    # Used: 141x93, 376x249, 140x93, 375x249
-    SIZES = {
-        "thumbnail": "188x225",
-        "medium": "750x900"
-    }
-
     title = models.CharField(unique=True, max_length=255, blank=False)
-    # Image field manages the creation and deletion of thumbnails
-    # automatically. When an instance of this class is deleted, thumbnails
-    # created for this field are automatically deleted too.
     image = ImageField(storage=OverwriteStorage(), upload_to=IMAGE_PATH, blank=False)
+
+    def thumbnail_img(self):
+        return self.image.get_thumbnail({'size': (188, 225)}).tag()
+
+    def medium_url(self):
+        return self.image.get_thumbnail({'size': (750, 900)}).url
     
     def __unicode__(self):
         return self.title
@@ -235,15 +230,14 @@ class PlateImage(models.Model):
     IMAGE_PATH = "plates/"
     ZOOM_PATH = "plates_z/"
     ZOOM_ABS_PATH = "%s%s" % (settings.MEDIA_ROOT, ZOOM_PATH)
-    SIZES = {
-        "thumbnail": "240x300",
-        "medium": "480x600"
-    }
 
     description = PlaceholderField('Description')
     image = ImageField(upload_to=IMAGE_PATH)
     z_image = models.FilePathField(path=ZOOM_ABS_PATH, recursive=True, match="ImageProperties.xml", max_length=200, help_text=z_image_docs, blank=True, null=True)
     member_species = models.ManyToManyField(Species)
+
+    def thumbnail_img(self):
+        return self.image.get_thumbnail({'size': (240, 300)}).tag()
 
     @property
     def zoomify_folder(self):
@@ -267,17 +261,6 @@ class Photographer(models.Model):
 
     def __unicode__(self):
         return self.photographer
-
-class FeaturedMothImage(CMSPlugin):
-    species =  models.ManyToManyField(Species)
-
-    def __unicode__(self):
-        return "FeaturedMothImagePlugin"
-
-    def copy_relations(self, oldinstance):
-        self.species = oldinstance.species.all()
-
-
 
 class RecordManager(models.Manager):
     def get_query_set(self):
@@ -412,13 +395,22 @@ class SpeciesImage(models.Model):
     ZOOM_PATH = "moths_z/"
     REARED_TERMS = ["reared","larva","em.","pupa","Rubus","immature","broadleaf","Taraxacum","ovum","emerged","emgd","em in","em ex","eggs"]
 
-    # TODO: REPLACE SORL WITH SOMETHING THAT DOESN"T PERMANENT CACHE!
-    # Changing these dimensions will force sorl to recache thumbs
-    # Used: 141x93, 376x249, 140x93, 375x249
     SIZES = {
         "thumbnail": "141x93",
         "medium": "376x249"
     }
+
+    def thumbnail_img(self):
+        return self.image.get_thumbnail({'size': (141, 93)}).tag()
+
+    def thumbnail_url(self):
+        return self.image.get_thumbnail({'size': (141, 93)}).url
+
+    def medium_img(self):
+        return self.image.get_thumbnail({'size': (376, 249)}).tag()
+
+    def medium_url(self):
+        return self.image.get_thumbnail({'size': (376, 249)}).url
     
     # Help Docs
     photographer_docs = "Used as the copyright holder."
