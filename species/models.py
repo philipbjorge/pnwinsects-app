@@ -420,9 +420,9 @@ class SpeciesImage(models.Model):
     weight_docs += "<br />Example 1: [-1,-1],[0,0,0],2,3"
     weight_docs += "<br />Example 2 (DEFAULT): [0,0,0,0,0]"
 
-    species = models.ForeignKey(Species, default=None, null=True, blank=True)
+    species = models.ForeignKey(Species)
     # defaults to first photographer defined. (Merrill A Peterson)
-    photographer = models.ForeignKey(Photographer, default=1, help_text=photographer_docs, null=True, blank=True)
+    photographer = models.ForeignKey(Photographer, default=1, help_text=photographer_docs)
 
     # Image field manages the creation and deletion of thumbnails
     # automatically. When an instance of this class is deleted, thumbnails
