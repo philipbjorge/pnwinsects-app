@@ -34,7 +34,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los Angeles'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -97,17 +97,7 @@ MIDDLEWARE_CLASSES = (
     'pnwsawflies.app.middleware.LoginRequiredMiddleware',
 )
 
-<<<<<<< HEAD
 ROOT_URLCONF = 'pnwsawflies.app.urls'
-=======
-ROOT_URLCONF = 'pnwmoths.app.urls'
-=======
-    'pnwsawflies.app.middleware.LoginRequiredMiddleware',
-)
-
-ROOT_URLCONF = 'pnwsawflies.app.urls'
->>>>>>> Custom settings.
->>>>>>> Custom settings.
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
@@ -115,7 +105,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, '../templates')
+    os.path.join(PROJECT_ROOT, '../templates'),
+    os.path.join(PROJECT_ROOT, 'templates')
 )
 
 INSTALLED_APPS = (
@@ -142,6 +133,7 @@ INSTALLED_APPS = (
     'pnwsawflies.app.cms_search',
     'pnwsawflies.app.species',
     'sorl.thumbnail',
+    'easy_thumbnails',
     'south',
     'reversion',
     'ajax_select',
