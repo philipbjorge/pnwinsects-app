@@ -76,14 +76,21 @@ class SpeciesImageAdmin(VersionAdmin, AjaxSelectAdmin, AdminImageMixin, admin.Mo
     ordering = ["species", "weight", "image"]
     # callable required to include foreign key in list_display
     def noc_id(self):
-        return self.species.noc_id
+        return self.species.noc_id or "None"
     noc_id.admin_order_field  = 'species__noc_id'
 
     def collection(self):
         return self.record.collection
     collection.admin_order_field = 'record__collection'
 
+    def published(self):
+        if self.species:
+            return "Yes"
+        return "No"
+    published.admin_order_field = 'species__id'
+
     list_display = (
+        published,
         noc_id,
         "species",
         "image",
@@ -104,7 +111,7 @@ class SpeciesRecordAdmin(VersionAdmin, AdminImageMixin, admin.ModelAdmin):
     
     # callable required to include foreign key in list_display
     def noc_id(self):
-        return self.species.noc_id
+        return self.species.noc_id or "None"
     noc_id.admin_order_field  = 'species__noc_id'
     
     def thumb(self):

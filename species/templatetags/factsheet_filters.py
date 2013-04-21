@@ -1,6 +1,9 @@
 from django import template
 from django.db.models import Min, Max
-from ..models import State, SpeciesRecord, GlossaryWord
+try:
+    from ..models import State, SpeciesRecord, GlossaryWord
+except Exception:
+    pass
 import json, re
 
 register = template.Library()

@@ -122,7 +122,7 @@ class LazyFloatField(forms.FloatField):
                     value += str(val[0]) + str(dec)[1:]
                     
                 # grab first float/integer
-                match = re.findall(r"[-+]?\d*\.\d+|\d+", value)
+                match = re.findall(r"[-+]?\d*\.\d+|[-+]?\d+", value)
                 if match:
                     # Compute the average if in 37.342-358 format
                     if len(match) > 1:

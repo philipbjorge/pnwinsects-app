@@ -14,7 +14,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from cms.models.pluginmodel import CMSPlugin
 from storage import OverwriteStorage
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.utils.translation import ugettext_lazy as _
 
 from cms.plugin_pool import plugin_pool
@@ -443,7 +443,10 @@ class SpeciesImage(models.Model):
 
 
     def specimen_details(self):
-        return self.record.details_tostr()
+	if self.record:
+            return self.record.details_tostr()
+        else:
+            return ""
 
     def zoomify_folder(self):
         # returns the name of the zoomify folder if it exists (trys with spaces in filename and with spaces replaced by underscores)
@@ -467,6 +470,8 @@ class SpeciesImage(models.Model):
 
     def license_details(self):
         r = self.record
+	if not r:
+	    return ""
         reared_terms = self.REARED_TERMS
         # reared terms are used to determine whether the date is suspect
         # if they are, we include our notes field
@@ -537,3 +542,14 @@ def add_text_plugin(sender, **kwargs):
         add_plugin(instance.description, plugin_pool.get_plugin("TextPlugin"), "en", body="<p>Default Text</p>")
 
 post_save.connect(add_text_plugin, sender=PlateImage)
+
+def clear_cache(sender, **kwargs):
+    try:    # if cms is installed
+        from django.core.cache import cache
+        cache.clear()
+    except:
+        pass
+
+# stops the django admin from having a cache after the menu has changed
+post_save.connect(clear_cache, sender=Page)
+post_delete.connect(clear_cache, sender=Page)

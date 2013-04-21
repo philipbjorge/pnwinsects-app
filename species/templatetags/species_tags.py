@@ -5,8 +5,11 @@ from django.utils.translation import ugettext as _
 from django.db.models import F
 import re
 
-from ..models import Species, PlateImage, GlossaryWord
 from cms.models.pagemodel import Page
+try:
+    from ..models import Species, PlateImage, GlossaryWord
+except Exception:
+    pass
 
 import random
 
