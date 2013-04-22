@@ -5,9 +5,8 @@ PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 # Variable returned from this method are loaded into the templates
 def species_globals(request):
-	from django.conf import settings
-	return {"SPECIES_SINGULAR": settings.SPECIES_SINGULAR, "SPECIES_PLURAL": settings.SPECIES_PLURAL,
-		"GOOGLE_SEARCH": settings.GOOGLE_SEARCH}
+    from django.conf import settings
+    return settings.TEMPLATE_VARIABLES
 
 # Define gettext for translation in settings.py.
 gettext = lambda s: s
