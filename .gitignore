@@ -3,6 +3,7 @@
 *.tmpl
 *.swo
 *~
+*.min
 species/migrations
 species/fixtures
 FusionUpdate.py
