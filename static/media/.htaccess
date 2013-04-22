@@ -1,10 +1,7 @@
 Options -Indexes
 RewriteEngine on
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?pnwmoths.biol.wwu.edu [NC]
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?dev.pnwmoths.biol.wwu.edu [NC]
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?prod.pnwmoths.biol.wwu.edu [NC]
-RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?unicorn.pnwmoths.biol.wwu.edu [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?(.*)wwu.edu [NC]
 RewriteRule \.(jpg|jpeg|png|gif|tif|tiff)$ - [NC,F,L]
 
 RewriteCond %{REQUEST_URI} \.js$
