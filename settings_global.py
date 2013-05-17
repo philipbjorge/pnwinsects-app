@@ -3,6 +3,8 @@ import logging.config
 import os
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
+HAYSTACK_ENABLE_REGISTRATIONS = False
+
 # Variable returned from this method are loaded into the templates
 def species_globals(request):
     from django.conf import settings
