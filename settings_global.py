@@ -3,8 +3,6 @@ import logging.config
 import os
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
-HAYSTACK_ENABLE_REGISTRATIONS = False
-
 # Variable returned from this method are loaded into the templates
 def species_globals(request):
     from django.conf import settings
@@ -172,8 +170,9 @@ CMS_LANGUAGE_DEFAULT = 'en'
 
 # django-haystack
 HAYSTACK_XAPIAN_PATH = os.path.join(PROJECT_ROOT, "site_index")
-HAYSTACK_SITECONF = "search_sites"
+HAYSTACK_SITECONF = "app.search_sites"
 HAYSTACK_SEARCH_ENGINE = "xapian"
+#HAYSTACK_ENABLE_REGISTRATIONS = False
 
 FILE_UPLOAD_HANDLERS = ("django.core.files.uploadhandler.TemporaryFileUploadHandler",
                         "django.core.files.uploadhandler.MemoryFileUploadHandler")

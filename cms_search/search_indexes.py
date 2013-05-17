@@ -1,4 +1,4 @@
-from cms.models import Page
+from cms.models.pagemodel import Page
 import datetime
 from django.db.models import Q
 from haystack import indexes, site
