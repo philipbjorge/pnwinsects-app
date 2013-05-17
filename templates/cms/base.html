@@ -41,7 +41,6 @@
     {% endblock %}
     {% render_block "css" %}
 
-    <noscript><p class="noscript">You appear to have JavaScript disabled or are using a browser that does not support it. Please enable JavaScript to experience all features of the site!</p></noscript>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -72,6 +71,7 @@
 {% if not request.is_ajax %}
 {% cms_toolbar %}
 {% endif %}
+<noscript><p class="noscript">You appear to have JavaScript disabled or are using a browser that does not support it. Please enable JavaScript to experience all features of the site!</p></noscript>
 <div id="header_container" class="container margin_top_15 nocontent">
   <div id="header" class="shadow_container">
           <div class="row">
