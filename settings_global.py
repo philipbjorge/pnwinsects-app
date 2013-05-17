@@ -14,11 +14,6 @@ gettext = lambda s: s
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# cache the menus for 1 second to remove admin latency
-# using per template caching - ack cache
-MENU_CACHE_DURATION=1
-CMS_CONTENT_CACHE_DURATION=1
-
 def custom_show_toolbar(request):
     return False # Always show toolbar, for example purposes only.
 
@@ -90,10 +85,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'snippetscream.ProfileMiddleware',
-    'johnny.middleware.LocalStoreClearMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,7 +148,6 @@ INSTALLED_APPS = (
     'paging',
     'admin_sentry',
     'django-lucid-key-report-generator',
-    'johnny',
 )
 
 CMS_TEMPLATES = (
