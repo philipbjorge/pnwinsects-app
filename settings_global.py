@@ -170,7 +170,7 @@ CMS_LANGUAGE_DEFAULT = 'en'
 
 # django-haystack
 HAYSTACK_XAPIAN_PATH = os.path.join(PROJECT_ROOT, "site_index")
-HAYSTACK_SITECONF = "app.search_sites"
+HAYSTACK_SITECONF = "search_sites"
 HAYSTACK_SEARCH_ENGINE = "xapian"
 #HAYSTACK_ENABLE_REGISTRATIONS = False
 
