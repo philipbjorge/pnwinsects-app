@@ -262,6 +262,11 @@ div.plateImage p {
   margin-right: 28px;
 }
 
+.noscript {
+  text-align : center;
+  background-color : #FFFFBD;
+}
+
 /* Mobile Version Styles
    All the above styles (desktop) are applied to the mobile version.
    1140grid/columnal handles shrinking the grid to the correct resolution.

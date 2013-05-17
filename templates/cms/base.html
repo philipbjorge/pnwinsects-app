@@ -40,6 +40,9 @@
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/custom.css" type="text/css" media="screen" />
     {% endblock %}
     {% render_block "css" %}
+
+    <noscript><p class="noscript">You appear to have JavaScript disabled or are using a browser that does not support it. Please enable JavaScript to experience all features of the site!</p></noscript>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     {% block breadcrumbs_css %}
@@ -53,7 +56,7 @@
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-33231112-1']);
+      _gaq.push(['_setAccount', '{{ ANALYTICS_ID }}']);
       _gaq.push(['_trackPageview']);
 
       (function() {
