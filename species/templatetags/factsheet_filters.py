@@ -1,7 +1,11 @@
 from django import template
 from django.db.models import Min, Max
+from django.utils.safestring import mark_safe
+from django.template.defaultfilters import stringfilter
+import shlex
+
 try:
-    from ..models import State, SpeciesRecord, GlossaryWord
+    from ..models import State, Species, SpeciesRecord, GlossaryWord
 except Exception:
     pass
 import json, re
@@ -94,3 +98,81 @@ def range_values(value):
 
     elevations.update(dates)
     return json.dumps(elevations)
+
+@register.filter
+def states_list(value):
+    """
+    Returns html for populating state multiselect box
+    """
+    states = set(SpeciesRecord.records.all().exclude(state__code=None).values_list("state__code", flat=True))
+
+    states = sorted(states)
+
+    html = ""
+    
+    for state in states:
+        
+        html += "\t<option value=\"" + str(state) + "\">" + str(state) + "</option>\n"
+
+    return mark_safe(html)
+
+@register.filter
+def counties_list(value):
+    """
+    Returns html for populating county multiselect box
+    """
+    states = set(SpeciesRecord.records.all().exclude(state__code=None).values_list("state__code", flat=True))
+
+    states = sorted(states)
+
+    html = ""
+    
+    for state in states:
+        html += "\t<optgroup label=\"" + str(state) + "\" class=\"countySel " + str(state) + "\">\n"
+        counties = set(SpeciesRecord.records.filter(county__state__code=str(state)).exclude(county__name=None).values_list("county__name", flat=True))
+        counties = sorted(counties)
+
+        for county in counties:
+            html += "\t\t<option value=\"" + str(county) + "\">" + str(county) + "</option>\n"
+
+    return mark_safe(html)
+
+@register.filter
+@stringfilter
+def loc_class(value):
+    """
+    Rerturns state and locality of the species
+    """
+    split = shlex.split(value)
+
+    q1 = SpeciesRecord.records.filter(species__genus=split[0])
+
+    states = set(q1.filter(species__species=split[1]).exclude(state__code=None).values_list("state__code", flat=True))
+
+    counties = set(q1.filter(species__species=split[1]).exclude(county__name=None).values_list("county__name", "county__state__code"))
+
+    countiesNS = set()
+
+    for county in counties:
+        countiesNS.add(county[0].replace(" ", "") + county[1])
+
+    statesStr = str(" ".join(states))
+
+    countiesStr = str(" ".join(countiesNS))
+
+    return statesStr + " " + countiesStr
+
+@register.filter
+@stringfilter
+def li_level(value):
+    """
+    Returns the name of the level the li is on
+    """
+    split = shlex.split(value)
+
+    if len(split) == 3:
+        return split[0]
+    elif len(split) == 1:
+        return "Genus";
+    else:
+        return "";

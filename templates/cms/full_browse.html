@@ -1,9 +1,12 @@
 {% extends "cms/base.html" %}
-{% load cms_tags menu_tags %}
+{% load cms_tags menu_tags factsheet_filters %}
 
 {% block stylesheets %}
 	{{ block.super }}
 	<link rel="stylesheet" href="{{ MEDIA_URL }}css_pages/browse.css" type="text/css">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/pnwmoths/jquery-ui-1.8.21.custom.css" type="text/css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css_ext/multiselect.css" type="text/css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css_ext/jquery.multiselect.filter.css" type="text/css">
 {% endblock %}
 {% block breadcrumbs %}
 &nbsp;
@@ -15,14 +18,34 @@
     }
   </style>
 {% endblock %}
+
+{% block scripts %}
+	{{ block.super }}
+	<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.js"></script>
+	<script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js_ext/jquery.multiselect.js"></script>
+    <script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js_ext/jquery.multiselect.filter.js"></script>
+    <script language="javascript" type="text/javascript" src="{{ MEDIA_URL }}js_pages/full_browse.js"></script>
+    <script type="text/javascript">
+        $("select").multiselect().multiselectfilter();
+    </script>
+{% endblock %}
+
 {% block content %}
 
 <div style="margin-bottom: 5px; margin-left: 10px; clear: both;">
 	<a href="/browse/" class="expand_button" style="padding: 5px">Browse with Images</a>
 </div>
 
+<div style="margin-bottom: 5px; margin-left: 10px; clear: both;">
+    <select id="stateselect" name="multiselect" multiple="multiple"">{{ ""|states_list }}</select>
+</div>
+
+<div style="margin-bottom: 5px; margin-left: 10px; clear: both;">
+    <select id="countyselect" name="multiselect" multiple="multiple">{{ ""|counties_list }}</select>
+</div>
+
 <ol id="browse-all">
-{% show_menu_below_id "browse" 0 100 100 100 %}
+{% show_menu_below_id "browse" 0 100 100 100 "menu/checklist.html" %}
 </ol>
 
 {% endblock %}
