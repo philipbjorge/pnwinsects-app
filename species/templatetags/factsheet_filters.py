@@ -3,6 +3,7 @@ from django.db.models import Min, Max
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import stringfilter
 import shlex
+import re
 
 try:
     from ..models import State, Species, SpeciesRecord, GlossaryWord
@@ -171,7 +172,7 @@ def li_level(value):
     split = shlex.split(value)
 
     if len(split) == 3:
-        return split[0]
+        return re.sub(r'\W+', '', split[0])
     elif len(split) == 1:
         return "Genus";
     else:
