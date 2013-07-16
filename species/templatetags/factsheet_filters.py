@@ -146,11 +146,13 @@ def loc_class(value):
     """
     split = shlex.split(value)
 
-    q1 = SpeciesRecord.records.filter(species__genus=split[0])
+    q1 = SpeciesRecord.records.filter(species__genus=re.sub(r'\W+', '', split[0]))
 
-    states = set(q1.filter(species__species=split[1]).exclude(state__code=None).values_list("state__code", flat=True))
+    split1 = re.sub(r'\W+', '', split[1])
 
-    counties = set(q1.filter(species__species=split[1]).exclude(county__name=None).values_list("county__name", "county__state__code"))
+    states = set(q1.filter(species__species=split1).exclude(state__code=None).values_list("state__code", flat=True))
+
+    counties = set(q1.filter(species__species=split1).exclude(county__name=None).values_list("county__name", "county__state__code"))
 
     countiesNS = set()
 
