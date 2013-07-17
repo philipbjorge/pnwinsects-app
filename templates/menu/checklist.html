@@ -1,6 +1,6 @@
 {% load menu_tags factsheet_filters %}
 {% for child in children %}
-<li class="{{ child.get_menu_title|li_level }}{% if not child.children %}Species {{ child.get_menu_title|loc_class }}{% endif %}">
+<li class="{{ child.get_menu_title|li_level }}{% if not child.children %}{{ child.get_menu_title|loc_class }}{% endif %}">
         <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
     {% if child.children %}
     <ul class="{{ child.get_menu_title|li_level }}_ul">

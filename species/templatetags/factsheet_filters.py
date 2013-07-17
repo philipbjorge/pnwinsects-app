@@ -2,7 +2,6 @@ from django import template
 from django.db.models import Min, Max
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import stringfilter
-import shlex
 import re
 
 try:
@@ -142,17 +141,15 @@ def counties_list(value):
 @stringfilter
 def loc_class(value):
     """
-    Rerturns state and locality of the species
+    Rerturns the states and counties the species is found in
     """
-    split = shlex.split(value)
+    genus, species = value.rsplit(" ", 1)
 
-    q1 = SpeciesRecord.records.filter(species__genus=re.sub(r'\W+', '', split[0]))
+    q1 = SpeciesRecord.records.filter(species__genus=genus)
 
-    split1 = re.sub(r'\W+', '', split[1])
+    states = set(q1.filter(species__species=species).exclude(state__code=None).values_list("state__code", flat=True))
 
-    states = set(q1.filter(species__species=split1).exclude(state__code=None).values_list("state__code", flat=True))
-
-    counties = set(q1.filter(species__species=split1).exclude(county__name=None).values_list("county__name", "county__state__code"))
+    counties = set(q1.filter(species__species=species).exclude(county__name=None).values_list("county__name", "county__state__code"))
 
     countiesNS = set()
 
@@ -171,11 +168,11 @@ def li_level(value):
     """
     Returns the name of the level the li is on
     """
-    split = shlex.split(value)
+    split = value.split(" ")
 
-    if len(split) == 3:
-        return re.sub(r'\W+', '', split[0])
-    elif len(split) == 1:
-        return "Genus";
+    if len(split) == 1:
+        return "Genus"
+    elif len(split) == 2:
+        return "Species "
     else:
-        return "";
+        return split[0];
