@@ -2,7 +2,6 @@ from django import template
 from django.db.models import Min, Max
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import stringfilter
-import re
 
 try:
     from ..models import State, Species, SpeciesRecord, GlossaryWord
