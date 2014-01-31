@@ -1,4 +1,3 @@
-<script type="text/javascript">
 var activityChart;
 $(document).ready(function () {
         chart1 = new Highcharts.Chart({
@@ -30,9 +29,8 @@ $(document).ready(function () {
                     title: {
                         text: false
                     }
-                },
+                }
             });
     });
-</script>
                 
                     
