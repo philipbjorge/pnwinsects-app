@@ -6,12 +6,12 @@ jQuery(window).load(function() {
     // Initialize our map
     var mapDiv = jQuery("#googlemap");
     mapDiv.show();
-    var centerPoint = new google.maps.LatLng(46.2, -119.4);
-    var zoomLevel = 5;
+    var centerPoint = new google.maps.LatLng(50.2, -119.4);
+    var zoomLevel = 4;
     if (jQuery(window).width() < 500)
-        zoomLevel = 4;
+        zoomLevel = 3;
     var options = {
-                zoom: 5,
+                zoom: 4,
                 scrollwheel: false,
                 zoomControl: false,
                 scaleControl: false,
@@ -32,10 +32,12 @@ jQuery(window).load(function() {
                 new google.maps.LatLng(-87, -87),
                 new google.maps.LatLng(-87, 0)];
     var pnw = [
-              new google.maps.LatLng(39, -126),
-              new google.maps.LatLng(52.3, -130),
-              new google.maps.LatLng(52.3, -109.0),
-              new google.maps.LatLng(39, -109.0)];
+              new google.maps.LatLng(60, -140),
+              new google.maps.LatLng(60, -120),
+              new google.maps.LatLng(53.8, -120),
+              new google.maps.LatLng(45, -109),
+              new google.maps.LatLng(39, -109),
+              new google.maps.LatLng(39, -125)];
     var polygon = new google.maps.Polygon({
               paths: [everythingElse, pnw],
               strokeColor: "#333",

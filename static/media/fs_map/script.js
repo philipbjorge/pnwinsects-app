@@ -46,10 +46,10 @@ PNWMOTHS.Map = function () {
             var mapDiv, map;
             mapDiv = jQuery("#googlemap");
             mapDiv.show();
-            PNWMOTHS.Map.centerPoint = new google.maps.LatLng(46.9, -118.0);
+            PNWMOTHS.Map.centerPoint = new google.maps.LatLng(50.2, -119.4);
             var options = {
                 scrollwheel: false,
-                zoom: 4,
+                zoom: 3,
                 streetViewControl: false,
                 center: PNWMOTHS.Map.centerPoint,
                 mapTypeId: 'terrain'
@@ -82,10 +82,12 @@ PNWMOTHS.Map = function () {
                 new google.maps.LatLng(-87, -87),
                 new google.maps.LatLng(-87, 0)];
             var pnw = [
-              new google.maps.LatLng(39, -126),
-              new google.maps.LatLng(52.3, -130),
-              new google.maps.LatLng(52.3, -109.0),
-              new google.maps.LatLng(39, -109.0)];
+              new google.maps.LatLng(60, -140),
+              new google.maps.LatLng(60, -120),
+              new google.maps.LatLng(53.8, -120),
+              new google.maps.LatLng(45, -109),
+              new google.maps.LatLng(39, -109),
+              new google.maps.LatLng(39, -125)];
             var polygon = new google.maps.Polygon({
               paths: [everythingElse, pnw],
               strokeColor: "#333",
