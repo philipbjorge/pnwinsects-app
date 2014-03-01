@@ -46,10 +46,10 @@ PNWMOTHS.Map = function () {
             var mapDiv, map;
             mapDiv = jQuery("#googlemap");
             mapDiv.show();
-            PNWMOTHS.Map.centerPoint = new google.maps.LatLng(50.2, -119.4);
+            PNWMOTHS.Map.centerPoint = new google.maps.LatLng(50.7, -119.4);
             var options = {
                 scrollwheel: false,
-                zoom: 3,
+                zoom: 4,
                 streetViewControl: false,
                 center: PNWMOTHS.Map.centerPoint,
                 mapTypeId: 'terrain'
