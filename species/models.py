@@ -530,7 +530,7 @@ def add_plugin(placeholder, plugin_type, language, position='last-child', **data
         position=1,
         language=language
     )
-    plugin_base.insert_at(None, position='last-child', commit=False)
+    plugin_base.insert_at(None, position='last-child', save=False)
     plugin = plugin_model(**data)
     plugin_base.set_base_attr(plugin)
     plugin.save()
