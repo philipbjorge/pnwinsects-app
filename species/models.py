@@ -319,6 +319,8 @@ class SpeciesRecord(models.Model):
     date_added = models.DateTimeField(editable=False)
     date_modified = models.DateTimeField(editable=False)
 
+    subspecies = models.CharField(null=True, blank=True, max_length=255)
+
     # Managers
     objects = models.Manager()
     records = RecordManager()
@@ -338,14 +340,12 @@ class SpeciesRecord(models.Model):
                 
     def details_tostr(self):
         r = self
-
-        s = "<strong>"
+        s = ""
         if r.state:
             s += str(r.state)
         if r.county:
             s += " : " + str(r.county.name) + " Co."
-        s += "</strong>"
-        if r.locality or r.elevation:
+        if (r.locality or r.elevation) and s != "":
             s += "<br />"
         if r.locality:
             s += r.locality
@@ -441,10 +441,18 @@ class SpeciesImage(models.Model):
     def title(self):
         return self.species
 
-
     def specimen_details(self):
-	if self.record:
-            return self.record.details_tostr()
+	    if self.record:
+                return self.record.details_tostr()
+            else:
+                return ""
+
+    def subspecies(self):
+        if self.record:
+            if self.record.subspecies:
+                return '<strong>Subspecies: <em>' + self.record.subspecies + '</em></strong><br />'
+            else:
+                return ""
         else:
             return ""
 
