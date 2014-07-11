@@ -104,7 +104,6 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 			    <div id="old-image-factsheet" class="hidden"><a href="{{ species_image.image.url }}"><img src="{{ species_image.medium_url }}" /></a></div>
                             <div id="zoomify-factsheet" class="hidden"></div>
                             <p id="slideshow-copyright">
-                                    {{ species_image.subspecies|safe }}
                                     {{ species_image.specimen_details|safe }}
                                     {{ species_image.license_details|safe }}
                             </p>
@@ -114,8 +113,11 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
                         <ul class="other-images">
                     {% endif %}
                     <li>
-                            <a href="{{ species_image.image.url }}" title='{{ species_image.subspecies }}{{ species_image.specimen_details }}{{ species_image.license_details }}&nbsp;' class="thumbnail">
+                            <a href="{{ species_image.image.url }}" title='{{ species_image.specimen_details }}{{ species_image.license_details }}&nbsp;' class="thumbnail">
                                 <img src="{{ species_image.thumbnail_url }}" />
+                                {% if species_image.subspecies_emstr %}
+                                    <p>{{ species_image.subspecies_emstr|safe }}</p>
+                                {% endif %}
                             </a>
                             {% with species_image.zoomify_folder|safe as inline_species_image %}
                                 {% ifequal inline_species_image "404" %}

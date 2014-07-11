@@ -341,6 +341,10 @@ class SpeciesRecord(models.Model):
     def details_tostr(self):
         r = self
         s = ""
+        if r.subspecies:
+            s += '<strong>Subspecies: <em>' + r.subspecies + '</em></strong>'
+        if (r.state or r.county) and s != "":
+            s += "<br />"
         if r.state:
             s += str(r.state)
         if r.county:
@@ -355,7 +359,7 @@ class SpeciesRecord(models.Model):
         if r.latitude and r.longitude:
             s += "<br />"
             s += str(round(r.latitude, 1)) + ", " + str(round(r.longitude, 1))
-        if s != "<strong></strong>":
+        if s != "":
             s += "<br />"
         else:
             s = ""
@@ -446,11 +450,11 @@ class SpeciesImage(models.Model):
                 return self.record.details_tostr()
             else:
                 return ""
-
-    def subspecies(self):
+            
+    def subspecies_emstr(self):
         if self.record:
             if self.record.subspecies:
-                return '<strong>Subspecies: <em>' + self.record.subspecies + '</em></strong><br />'
+                return '<em>' + self.record.subspecies + '</em>'
             else:
                 return ""
         else:
