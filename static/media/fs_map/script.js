@@ -247,6 +247,7 @@ PNWMOTHS.Map = function () {
                               "county": "County/Regional District",
                               "state": "State/Province",
                               "elevation": "Elevation (ft.)",
+                              "subspecies": "Subspecies",
                               "latitude": "Latitude",
                               "longitude": "Longitude"},
                 attHtml = new Array(), colHtml = new Array(), notesHtml,
@@ -333,6 +334,7 @@ PNWMOTHS.Map = function () {
                     "county",
                     "state",
                     "elevation",
+                    "subspecies",
                     "precision",
                 ];
 
@@ -687,6 +689,7 @@ jQuery(document).ready(function () {
 			{"name": "state", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "States/Provinces", "selectedText": "Filtering on # states", "ajax": true},
 			{"name": "collection", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Collections", "selectedText": "Filtering on # collections", "ajax": true},
 			{"name": "record_type", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Voucher Types", "selectedText": "Filtering on # types", "ajax": true},
+			{"name": "subspecies", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Subspecies", "selectedText": "Filtering on # subspecies", "ajax": true},
 			{"name": "range", "type": PNWMOTHS.Filters.DateRangeFilter, "ajax": true},
 			{"name": "year", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Years", "selectedText": "Filtering on # years", "ajax": true},
 			{"name": "month", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Months", "selectedText": "Filtering on # months", "ajax": true},
