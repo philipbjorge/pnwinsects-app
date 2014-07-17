@@ -247,9 +247,9 @@ PNWMOTHS.Map = function () {
                               "county": "County/Regional District",
                               "state": "State/Province",
                               "elevation": "Elevation (ft.)",
-                              "subspecies": "Subspecies",
                               "latitude": "Latitude",
-                              "longitude": "Longitude"},
+                              "longitude": "Longitude",
+                              "subspecies": "Subspecies"},
                 attHtml = new Array(), colHtml = new Array(), notesHtml,
                 attribute, attribute_name, attribute_value, i, j;
             attHtml.push('<div id="IB_att" class="infowindow">');
