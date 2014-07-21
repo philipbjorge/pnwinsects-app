@@ -248,8 +248,7 @@ PNWMOTHS.Map = function () {
                               "state": "State/Province",
                               "elevation": "Elevation (ft.)",
                               "latitude": "Latitude",
-                              "longitude": "Longitude",
-                              "subspecies": "Subspecies"},
+                              "longitude": "Longitude"},
                 attHtml = new Array(), colHtml = new Array(), notesHtml,
                 attribute, attribute_name, attribute_value, i, j;
             attHtml.push('<div id="IB_att" class="infowindow">');
@@ -291,14 +290,18 @@ PNWMOTHS.Map = function () {
                 colHtml.push("</div>");
             }
 
-            // regex replace to display multiline notes properly in HTML
             if(!record["notes"])
                 record["notes"] = "";
-            notesHtml = '<div id="IB_notes" class="infowindow collections"><p>' + urlize(record["notes"],undefined,undefined,undefined,"_blank",true).replace(/\r\n/g, "<br />").replace(/\n/g, "<br />") + "</p></div>";
+            if(record["subspecies"])
+                var subsp = "Subspecies: " + record["subspecies"];
+            else
+                var subsp = "";
+            // regex replace to display multiline notes properly in HTML
+            notesHtml = '<div id="IB_notes" class="infowindow collections"><p>' + urlize(record["notes"],undefined,undefined,undefined,"_blank",true).replace(/\r\n/g, "<br />").replace(/\n/g, "<br />") + subsp + "</p></div>";
 
             return [attHtml.join(''), colHtml.join(''), notesHtml];
         },
-        openIB: null,
+        openIB: null, 
         handleMarkerClick: function(data) { 
             return function() { 
                 var html = PNWMOTHS.Map.renderMarkerRecord(data);
