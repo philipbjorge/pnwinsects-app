@@ -13,7 +13,7 @@ register = template.Library()
 
 @register.filter
 def get_records(value):
-    results = list(SpeciesRecord.records.filter(species=value).select_related('collector__name', 'collection__url', 'collection__name', 'county_name', 'state__code').values('collection__name', 'collection__url', 'collector__name', 'county__name', 'day', 'elevation', 'females', 'latitude', 'longitude', 'locality', 'males', 'month', 'notes', 'record_type', 'state__code', 'subspecies', 'year'))
+    results = list(SpeciesRecord.objects.filter(species=value).select_related('collector__name', 'collection__url', 'collection__name', 'county_name', 'state__code').values('collection__name', 'collection__url', 'collector__name', 'county__name', 'day', 'elevation', 'females', 'id', 'latitude', 'longitude', 'locality', 'linked_photo', 'males', 'month', 'notes', 'record_type', 'state__code', 'subspecies', 'year'))
 
     renames = ['collection', 'collector', 'county']
     for d in results:
@@ -35,6 +35,13 @@ def get_records(value):
 
     return json.dumps(results)
 
+@register.filter
+def get_photos(value):
+    records = list(value.get_ordered_images())
+    entries = []
+    for photo in records:
+        entries.append({'record_id': photo.record.id, 'url': photo.thumbnail_url()})
+    return json.dumps(entries)
 
 @register.filter
 def filters_json(value, arg):
@@ -51,10 +58,10 @@ def filters_json(value, arg):
         for p in states:
             s_id,code = p
             state_lookup[s_id] = code
-
-        return str(sorted([str("%s (%s)" % (item[0], state_lookup.get(item[1], "CANADA"))).replace("'", "`") for item in set(value.speciesrecord_set.filter(speciesimage__isnull=True).values_list('county__name', 'county__state'))])).replace("'", '"').replace("`", "'")
+        return str(sorted([str("%s (%s)" % (item[0], state_lookup.get(item[1], "CANADA"))).replace("'", "`") for item in set(value.speciesrecord_set.all().values_list('county__name', 'county__state'))])).replace("'", '"').replace("`", "'")
+        
     # filter removes None elements, human sort sorts in expected order
-    return str(sorted([str(str(item)[0].capitalize() + str(item)[1:]).replace("'", "`") for item in set(filter(None, value.speciesrecord_set.filter(speciesimage__isnull=True).values_list(arg, flat=True)))], key=_human_key)).replace("'", '"').replace("`", "'")
+    return str(sorted([str(str(item)[0].capitalize() + str(item)[1:]).replace("'", "`") for item in set(filter(None, value.speciesrecord_set.all().values_list(arg, flat=True)))], key=_human_key)).replace("'", '"').replace("`", "'")
 
 @register.filter
 def glossary_words_json(value):
@@ -67,15 +74,15 @@ def glossary_words_json(value):
 
 @register.filter
 def range_values(value):
-    elevations = SpeciesRecord.records.filter(species=value).aggregate(Max('elevation'), Min('elevation')) 
+    elevations = SpeciesRecord.objects.filter(species=value).aggregate(Max('elevation'), Min('elevation')) 
     elevations["elevation__min"] = elevations["elevation__min"] or 0
     elevations["elevation__max"] = elevations["elevation__max"] or 14000
     # can't be equal for range filter
     if elevations["elevation__max"] == elevations["elevation__min"]:
         elevations["elevation__max"] += 1
 
-    if SpeciesRecord.records.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").count() > 0:
-        min_date = SpeciesRecord.records.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day")[0].fuzzy_date
+    if SpeciesRecord.objects.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").count() > 0:
+        min_date = SpeciesRecord.objects.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day")[0].fuzzy_date
     else:
         min_date = None
     if min_date:
@@ -83,8 +90,8 @@ def range_values(value):
     else:
         min_date = "01/01/1890"
 
-    if SpeciesRecord.records.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").count() > 0:
-        max_date = SpeciesRecord.records.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").reverse()[0].fuzzy_date
+    if SpeciesRecord.objects.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").count() > 0:
+        max_date = SpeciesRecord.objects.filter(species=value).filter(year__isnull=False).order_by("year", "month", "day").reverse()[0].fuzzy_date
     else:
         max_date = None
     if max_date:
