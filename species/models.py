@@ -448,7 +448,7 @@ class SpeciesImage(models.Model):
         return self.species
 
     def specimen_details(self):
-	    if self.record:
+            if self.record:
                 return self.record.details_tostr()
             else:
                 return ""
@@ -484,8 +484,8 @@ class SpeciesImage(models.Model):
 
     def license_details(self):
         r = self.record
-	if not r:
-	    return ""
+        if not r:
+            return ""
         reared_terms = self.REARED_TERMS
         # reared terms are used to determine whether the date is suspect
         # if they are, we include our notes field
@@ -528,7 +528,7 @@ class SpeciesImage(models.Model):
         self.__original_record = self.record
         
     # Check if there are photos linked to record upon saving, and change field accordingly
-    def save(self, *args, **kwargs):
+    def save(self, keep_old_record=True, *args, **kwargs):
         # Do default save for SpeciesImage
         super(SpeciesImage, self).save(*args, **kwargs)
         
@@ -540,12 +540,13 @@ class SpeciesImage(models.Model):
                 self.record.linked_photo = True
             self.record.save()
             
-            # Change linked photo field of old record if there are no images pointing at it
-            if self.__original_record.speciesimage_set.exists():
-                self.__original_record.linked_photo = True
-            else:
-                self.__original_record.linked_photo = False
-            self.__original_record.save()
+            if keep_old_record:
+                # Change linked photo field of old record if there are no images pointing at it
+                if self.__original_record.speciesimage_set.exists():
+                    self.__original_record.linked_photo = True
+                else:
+                    self.__original_record.linked_photo = False
+                self.__original_record.save()
             
         self.__original_record = self.record
 
