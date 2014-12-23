@@ -178,11 +178,10 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
             <select class="half" id="f-state" multiple="multiple"></select>
             <select class="half" id="f-collection" multiple="multiple"></select>
             <select class="half" id="f-record_type" multiple="multiple"></select>
-            <select class="third" id="f-subspecies" multiple="multiple"></select>
-            <select class="third" id="f-linked_photo" multiple="multiple"></select>
             <select class="third" id="f-year" multiple="multiple"></select>
             <select class="third" id="f-month" multiple="multiple"></select>
             <select class="third" id="f-day" multiple="multiple"></select>
+            <select class="third" id="f-subspecies" multiple="multiple"></select>
             <div id="date-filter-1" class="whole" style="padding-top: 50px">
                     <div id="f-date"></div>
             </div>
@@ -215,9 +214,6 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    <span class="dokuwiki-data nocontent" id="species-data">
 	    {{ species|get_records|safe }}
 	    </span>
-	    <span class="dokuwiki-data nocontent" id="photo-data">
-	    {{ species|get_photos|safe }}
-	    </span>
 	    <span class="dokuwiki-data nocontent" id="state-data">
 	    {{ species|filters_json:"state__code"|safe }}
 	    </span>
@@ -230,12 +226,6 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    <span class="dokuwiki-data nocontent" id="record_type-data">
 	    {{ species|filters_json:"record_type"|safe }}
 	    </span>
-	    <span class="dokuwiki-data nocontent" id="subspecies-data">
-	    {{ species|filters_json:"subspecies"|safe }}
-	    </span>
-	    <span class="dokuwiki-data nocontent" id="linked_photo-data">
-	    {{ species|filters_json:"linked_photo"|safe }}
-	    </span>
 	    <span class="dokuwiki-data nocontent" id="year-data">
 	    {{ species|filters_json:"year"|safe }}
 	    </span>
@@ -244,6 +234,9 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    </span>
 	    <span class="dokuwiki-data nocontent" id="day-data">
 	    {{ species|filters_json:"day"|safe }}
+	    </span>
+	    <span class="dokuwiki-data nocontent" id="subspecies-data">
+	    {{ species|filters_json:"subspecies"|safe }}
 	    </span>
 	    <span class="dokuwiki-data nocontent" id="range-data">
 	    {{ species|range_values|safe }}
@@ -253,9 +246,6 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    <span class="dokuwiki-data nocontent" id="species-data">
 	    {{ species|get_records|safe }}
 	    </span>
-	    <span class="dokuwiki-data nocontent" id="photo-data">
-	    {{ species|get_photos|safe }}
-	    </span>
 	    <span class="dokuwiki-data nocontent" id="state-data">
 	    {{ species|filters_json:"state__code"|safe }}
 	    </span>
@@ -268,12 +258,6 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    <span class="dokuwiki-data nocontent" id="record_type-data">
 	    {{ species|filters_json:"record_type"|safe }}
 	    </span>
-	    <span class="dokuwiki-data nocontent" id="subspecies-data">
-	    {{ species|filters_json:"subspecies"|safe }}
-	    </span>
-	    <span class="dokuwiki-data nocontent" id="linked_photo-data">
-	    {{ species|filters_json:"linked_photo"|safe }}
-	    </span>
 	    <span class="dokuwiki-data nocontent" id="year-data">
 	    {{ species|filters_json:"year"|safe }}
 	    </span>
@@ -282,6 +266,9 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 	    </span>
 	    <span class="dokuwiki-data nocontent" id="day-data">
 	    {{ species|filters_json:"day"|safe }}
+	    </span>
+	    <span class="dokuwiki-data nocontent" id="subspecies-data">
+	    {{ species|filters_json:"subspecies"|safe }}
 	    </span>
 	    <span class="dokuwiki-data nocontent" id="range-data">
 	    {{ species|range_values|safe }}

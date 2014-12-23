@@ -72,7 +72,6 @@ PNWMOTHS.Map = function () {
              PNWMOTHS.Map.openIB.addTab('Site', "<br /><br /><br /><br /><br />"); 
              PNWMOTHS.Map.openIB.addTab('Collections', ""); 
              PNWMOTHS.Map.openIB.addTab('Notes', "");
-             PNWMOTHS.Map.openIB.addTab('Photos', "");
              PNWMOTHS.Map.openIB.calcOnce = false;             
 
             return map;
@@ -235,12 +234,7 @@ PNWMOTHS.Map = function () {
                              * 
                              * @type {google}
                              */
-                            if (data[i].linked_photo == true) {
-                                var marker = new com.redfin.FastMarker(/*id*/i, point, ["<div class='marker brown' onclick='PNWMOTHS.Map.openMarker(\""+data[i].latitude+","+data[i].longitude+"\")'>&nbsp;</div>"], null);
-                            }
-                            else {
-                                var marker = new com.redfin.FastMarker(/*id*/i, point, ["<div class='marker yellow' onclick='PNWMOTHS.Map.openMarker(\""+data[i].latitude+","+data[i].longitude+"\")'>&nbsp;</div>"], null);
-                            }
+                            var marker = new com.redfin.FastMarker(/*id*/i, point, ["<div class='marker' onclick='PNWMOTHS.Map.openMarker(\""+data[i].latitude+","+data[i].longitude+"\")'>&nbsp;</div>"], null);
                             markersArray.push(marker);
                         }
                     }
@@ -255,7 +249,7 @@ PNWMOTHS.Map = function () {
                               "elevation": "Elevation (ft.)",
                               "latitude": "Latitude",
                               "longitude": "Longitude"},
-                attHtml = new Array(), colHtml = new Array(), notesHtml, photosHtml = new Array(),
+                attHtml = new Array(), colHtml = new Array(), notesHtml,
                 attribute, attribute_name, attribute_value, i, j;
             attHtml.push('<div id="IB_att" class="infowindow">');
             for (attribute in attributes) {
@@ -304,23 +298,8 @@ PNWMOTHS.Map = function () {
                 var subsp = "";
             // regex replace to display multiline notes properly in HTML
             notesHtml = '<div id="IB_notes" class="infowindow collections"><p>' + urlize(record["notes"],undefined,undefined,undefined,"_blank",true).replace(/\r\n/g, "<br />").replace(/\n/g, "<br />") + subsp + "</p></div>";
-            
-            photosHtml.push('<div id="IB_photos" class="infowindow">');
-            
-            // If record has photos linked to it, put every photo matching ID in photos tab
-            if (record["linked_photo"]) {
-                var photos = PNWMOTHS.Data.data["photo-data"]
-                for (var i=0; i<photos.length; i++) {
-                    if (record["id"] == photos[i].record_id)
-                        photosHtml.push('<img class="IB_image" src=' + photos[i].url + ' />')
-                }
-            }
-            else {
-                photosHtml.push("<p>No photos linked to this record.</p>");
-            }
-            photosHtml.push("</div>");
 
-            return [attHtml.join(''), colHtml.join(''), notesHtml, photosHtml.join('')];
+            return [attHtml.join(''), colHtml.join(''), notesHtml];
         },
         openIB: null, 
         handleMarkerClick: function(data) { 
@@ -329,11 +308,10 @@ PNWMOTHS.Map = function () {
 
                 var IB = PNWMOTHS.Map.openIB;
                 var update = function() {
-                    IB.removeTab(0); IB.removeTab(0); IB.removeTab(0); IB.removeTab(0);
+                    IB.removeTab(0); IB.removeTab(0); IB.removeTab(0);
                     IB.addTab('Site', html[0]);
                     IB.addTab('Collections', html[1]);
                     IB.addTab('Notes', html[2]);
-                    IB.addTab('Photos', html[3]);
                 };
                 if (IB.isOpen()) 
                     IB.close();
@@ -360,9 +338,7 @@ PNWMOTHS.Map = function () {
                     "state",
                     "elevation",
                     "subspecies",
-                    "linked_photo",
                     "precision",
-                    "id",
                 ];
 
             for (i in data) {
@@ -701,12 +677,9 @@ jQuery(document).ready(function () {
                     });
                 } else {
                     PNWMOTHS.Map.openIB.close();
-                    // Clear markers if there are any
-                    if (PNWMOTHS.Map.markers) {
-                        PNWMOTHS.Map.markers.setMap(null);
-                        delete PNWMOTHS.Map.markers;
-                        PNWMOTHS.Map.markers = PNWMOTHS.Map.makeMarkers(data, PNWMOTHS.Map.map);
-                    }
+                    PNWMOTHS.Map.markers.setMap(null);
+                    delete PNWMOTHS.Map.markers;
+                    PNWMOTHS.Map.markers = PNWMOTHS.Map.makeMarkers(data, PNWMOTHS.Map.map);
                 }
             });
 			
@@ -720,7 +693,6 @@ jQuery(document).ready(function () {
 			{"name": "collection", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Collections", "selectedText": "Filtering on # collections", "ajax": true},
 			{"name": "record_type", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Voucher Types", "selectedText": "Filtering on # types", "ajax": true},
 			{"name": "subspecies", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Subspecies", "selectedText": "Filtering on # subspecies", "ajax": true},
-			{"name": "linked_photo", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Photos Linked to Record", "selectedText": "Filtering on # linked photos", "ajax": true},
 			{"name": "range", "type": PNWMOTHS.Filters.DateRangeFilter, "ajax": true},
 			{"name": "year", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Years", "selectedText": "Filtering on # years", "ajax": true},
 			{"name": "month", "type": PNWMOTHS.Filters.MultiSelectFilter, "noneSelectedText": "Months", "selectedText": "Filtering on # months", "ajax": true},

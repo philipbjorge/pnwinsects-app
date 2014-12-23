@@ -320,8 +320,6 @@ class SpeciesRecord(models.Model):
     date_modified = models.DateTimeField(editable=False)
 
     subspecies = models.CharField(null=True, blank=True, max_length=255)
-    
-    linked_photo = models.BooleanField(default=False)
 
     # Managers
     objects = models.Manager()
@@ -448,7 +446,7 @@ class SpeciesImage(models.Model):
         return self.species
 
     def specimen_details(self):
-            if self.record:
+	    if self.record:
                 return self.record.details_tostr()
             else:
                 return ""
@@ -484,8 +482,8 @@ class SpeciesImage(models.Model):
 
     def license_details(self):
         r = self.record
-        if not r:
-            return ""
+	if not r:
+	    return ""
         reared_terms = self.REARED_TERMS
         # reared terms are used to determine whether the date is suspect
         # if they are, we include our notes field
@@ -521,34 +519,6 @@ class SpeciesImage(models.Model):
         s += "<br />Photograph copyright: %s" % self.photographer
 
         return s
-       
-    # Do default init behavior, but also save current record field
-    def __init__(self, *args, **kwargs):
-        super(SpeciesImage, self).__init__(*args, **kwargs)
-        self.__original_record = self.record
-        
-    # Check if there are photos linked to record upon saving, and change field accordingly
-    def save(self, keep_old_record=True, *args, **kwargs):
-        # Do default save for SpeciesImage
-        super(SpeciesImage, self).save(*args, **kwargs)
-        
-        # Check if record has changed
-        if self.record != self.__original_record:
-        
-            # Set linked photo field of record to true if a new record is linked
-            if self.record:
-                self.record.linked_photo = True
-            self.record.save()
-            
-            if keep_old_record:
-                # Change linked photo field of old record if there are no images pointing at it
-                if self.__original_record.speciesimage_set.exists():
-                    self.__original_record.linked_photo = True
-                else:
-                    self.__original_record.linked_photo = False
-                self.__original_record.save()
-            
-        self.__original_record = self.record
 
 class ExtendedPage(models.Model):
     page = models.ForeignKey(Page, unique=True, verbose_name=_("Page"), editable=False, related_name="extended_fields")

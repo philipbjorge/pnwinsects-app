@@ -100,10 +100,7 @@ class SpeciesImageAdmin(VersionAdmin, AjaxSelectAdmin, AdminImageMixin, admin.Mo
     )
     list_editable = ("weight",)
     search_fields = ("species__genus", "species__species", "image")
-    raw_id_fields = ("record",)
-    
-    def save_model(self, request, obj, form, change):
-        obj.save()
+    form = make_ajax_form(SpeciesImage,{'record':'SpeciesRecord'})
     
 admin.site.register(SpeciesImage, SpeciesImageAdmin)
 
