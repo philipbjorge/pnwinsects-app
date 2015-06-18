@@ -40,7 +40,8 @@ def get_photos(value):
     records = list(value.get_ordered_images())
     entries = []
     for photo in records:
-        entries.append({'record_id': photo.record.id, 'url': photo.thumbnail_url()})
+        if photo.record:
+            entries.append({'record_id': photo.record.id, 'url': photo.thumbnail_url()})
     return json.dumps(entries)
 
 @register.filter
